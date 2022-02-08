@@ -36,5 +36,67 @@ inner join Orders o on o.OrderID=od.OrderID
 where year(o.OrderDate)=1997
 Group by p.ProductName
 Order by ciro desc
+---------------------------------------------------------------
 
+/*
+   Inner Join Kullanimi
 
+*/
+Select s.CompanyName, count(o.OrderID)
+from Orders o
+right join Shippers s on s.ShipperID=o.ShipVia
+Group by s.CompanyName
+
+--1997 yilindaki satislarin aylara gore dagilimi
+select MONTH(OrderDate) Ay, count(*) Adet
+from Orders
+where year(OrderDate) = 1997
+Group by MONTH(OrderDate)
+
+--1997 yilindaki satislarin urunlere göre dagilimi
+select p.productName, 
+sum(od.quantity) Adet, 
+-- 1.ciro yontemi: Sum(od.quantity*od.UnitPrice) - ((od.quantity*od.UnitPrice)*od.Discount)
+-- 2.ciro yontemi:
+sum(od.UnitPrice*(1-od.Discount) * od.Quantity) Ciro
+from Products p
+inner join [Order Details] od on od.ProductID=p.ProductID
+inner join Orders o on o.OrderID=od.OrderID
+where year(o.OrderDate)=1997 
+Group by p.ProductName
+having sum(od.UnitPrice*(1-od.Discount) * od.Quantity) < 10000
+order by ciro desc
+-------------------------------------------------------------------
+
+-- Select Case When Kullanimi
+
+select FirstName , LastName, 
+case country
+when 'USA' then 'Amerika'
+when 'UK' then 'Ingiltere'
+end
+from Employees
+
+-- SubQuery => iç içe sorgu yada alt sorgu
+
+select top 1 * from Products Order by UnitPrice desc
+
+Select * from Products
+where UnitPrice= (select max(UnitPrice) from Products)
+
+-- Ortalama fiyatin altında kalan urunler hangileridir?
+Select * from Products
+where UnitPrice < (select avg(UnitPrice) from Products)
+
+-- Ürünler tablosunda hiç satisi yapilmayan urun var mi?
+select * from Products
+where ProductID not in (select ProductID from [Order Details])
+
+select *
+from products p
+left join [Order Details] od on od.ProductID=p.ProductID
+where OrderID is null
+
+-- Hiç siparis almayıp yan gelip yatan personelin listesi
+select * from employees e
+where not exists e.EmployeeID (select emploeeId from orders)
