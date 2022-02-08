@@ -14,3 +14,27 @@ inner join Orders o on o.CustomerID=c.CustomerID
 where year(o.OrderDate)=1997 
 and MONTH(o.OrderDate) between 1 and 3
 Group By c.CompanyName
+
+--3: kargo firmalarinin tasidigi siparis sayisi nedir?
+select s.CompanyName, count(o.OrderID) satisAdedi
+       from Shippers s
+       inner join Orders o on s.ShipperID= o.ShipVia
+       group by s.CompanyName
+       order by 1
+
+--4: ürünlerin 1997 yilindaki satis adetleri ve cirolari nedir?
+select top 10 * from Orders
+select top 10 * from [Order Details]
+select top 10 * from Products
+
+select p.ProductName, 
+Sum(od.Quantity) Adet, 
+SUM(od.quantity * od.UnitPrice) ciro    
+from Products p
+inner join [Order Details] od on od.ProductID=p.ProductID
+inner join Orders o on o.OrderID=od.OrderID
+where year(o.OrderDate)=1997
+Group by p.ProductName
+Order by ciro desc
+
+
