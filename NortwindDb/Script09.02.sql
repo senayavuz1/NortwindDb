@@ -71,5 +71,5 @@ Print 'Cıkarma :'+ Convert(varchar,(@sayi1 - @sayi2))
 
 End
 
-
 exec dbo.DortIslem 10 ,5
+

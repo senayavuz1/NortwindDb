@@ -100,3 +100,4 @@ where OrderID is null
 -- Hiç siparis almayıp yan gelip yatan personelin listesi
 select * from employees e
 where not exists e.EmployeeID (select emploeeId from orders)
+
