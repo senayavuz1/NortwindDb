@@ -20,7 +20,7 @@ değisken Tanımlama : declare keyword'u ile yapılır
 Aralarinda ',' koyarak da devam edebilirsiniz.
 */
 
-declare @sati int
+declare @sayi int
 -- bir kisinin adini,soyadını,yasını,tcNo sunu
 -- ve cebindeki parasini tutan degiskenleri tanimlayiniz
 
@@ -46,3 +46,30 @@ Select @ad = 'Ali', @soyad = 'Veli', @yas = '30'
 select @ad ad,@soyad soyad,@yas yas
 Print @ad + @soyad
 
+/*
+
+Procedure Tanımlama için Create kullanılır. Creat komutu
+genel anlamda sql server icerisinde olusturulabilecek butun objelerden sorumludur.
+
+Creat Procedure <ProcedureAdi> (AldigiParametreler)
+as
+Begin
+
+End
+*/
+
+
+Alter Procedure DortIslem
+(@sayi1 int,@sayi2 int)
+as
+Begin
+
+Print 'Carpim :'+ Convert(varchar,(@sayi1 * @sayi2))
+Print 'Bolme :'+ Convert(varchar,(@sayi1 / @sayi2))
+Print 'Toplama :'+ convert(varchar,(@sayi1 + @sayi2))
+Print 'Cıkarma :'+ Convert(varchar,(@sayi1 - @sayi2))
+
+End
+
+
+exec dbo.DortIslem 10 ,5
