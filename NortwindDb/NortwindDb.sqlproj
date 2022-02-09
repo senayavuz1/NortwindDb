@@ -103,5 +103,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="JoinSoruları.sql" />
+    <None Include="Script09.02.sql" />
   </ItemGroup>
 </Project>
